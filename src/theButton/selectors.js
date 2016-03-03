@@ -1,4 +1,4 @@
-import { compose, prop } from 'ramda'
+import { prop } from 'ramda'
 import { name } from './__init__'
 
 // getModel :: State -> Model

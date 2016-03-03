@@ -1,4 +1,5 @@
 import { compose, prop } from 'ramda'
+import * as randomGif from '../randomGif'
 import { name } from './__init__'
 
 // getModel :: State -> Model
