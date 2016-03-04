@@ -7,8 +7,7 @@ import * as actions from './actions'
 import { getLeft, getRight } from './selectors'
 
 export const Component = (
-  { requestMoreLeft
-  , requestMoreRight
+  { requestMore
   , left
   , right
   }
@@ -16,10 +15,12 @@ export const Component = (
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       <div style={{ flexGrow: 1 }}>
-        <randomGif.Component model={left} requestMore={requestMoreLeft}/>
+        <randomGif.Component model={left}
+                             requestMore={topic => requestMore({side: 'left', topic})}/>
       </div>
       <div style={{ flexGrow: 1 }}>
-        <randomGif.Component model={right} requestMore={requestMoreRight}/>
+        <randomGif.Component model={right}
+                             requestMore={topic => requestMore({side: 'right', topic})}/>
       </div>
     </div>
   )

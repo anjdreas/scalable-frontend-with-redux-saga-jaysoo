@@ -4,18 +4,18 @@ import * as randomGif from '../randomGif'
 import * as tasks from '../tasks'
 import * as actions from './actions'
 
-const withSide = side => url => ({ url, side })
+const withPosition = position => url => ({ url, position })
 
-function* doRequestMore(side, topic) {
-  yield put(actions.pending({ side }))
-  const task = compose(lift(withSide(side)), randomGif.tasks.fetchRandomGif)(topic)
+function* doRequestMore(position, topic) {
+  yield put(actions.pending({ position }))
+  const task = compose(lift(withPosition(position)), randomGif.tasks.fetchRandomGif)(topic)
   yield put(tasks.actions.runTask(task, actions.NEW_GIF, actions.NEW_GIF))
 }
 
 function* watchRequestMore() {
   while (true) {
-    const { payload: { side, topic } } = yield take(actions.REQUEST_MORE)
-    yield fork(doRequestMore, side, topic)
+    const { payload: { position, topic } } = yield take(actions.REQUEST_MORE)
+    yield fork(doRequestMore, position, topic)
   }
 }
 

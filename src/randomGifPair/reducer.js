@@ -1,7 +1,7 @@
 import update from 'react/lib/update'
 import { combineReducers } from 'redux'
 import * as randomGif from '../randomGif'
-import { NEW_GIF_LEFT, PENDING_LEFT, NEW_GIF_RIGHT, PENDING_RIGHT } from './actions'
+import { NEW_GIF, PENDING } from './actions'
 
 export const initialState =
   { left: { [randomGif.name]: randomGif.Model.Empty('futurama') }
@@ -11,41 +11,21 @@ export const initialState =
 export default (state = initialState, action) => {
   const { type, payload } = action
   switch (type) {
-    case NEW_GIF_LEFT:
+    case NEW_GIF:
       return update(state, {
-        left: {
+        [payload.side]: {
           [randomGif.name]: {
-            $set: randomGif.reducer( state.left[randomGif.name]
-                                   , randomGif.actions.newGif(payload)
+            $set: randomGif.reducer( state[payload.side][randomGif.name]
+                                   , randomGif.actions.newGif(payload.url)
             )
           }
         }
       })
-    case PENDING_LEFT:
+    case PENDING:
       return update(state, {
-        left: {
+        [payload.side]: {
           [randomGif.name]: {
-            $set: randomGif.reducer( state.left[randomGif.name]
-                                   , randomGif.actions.pending()
-            )
-          }
-        }
-      })
-    case NEW_GIF_RIGHT:
-      return update(state, {
-        right: {
-          [randomGif.name]: {
-            $set: randomGif.reducer( state.right[randomGif.name]
-                                   , randomGif.actions.newGif(payload)
-            )
-          }
-        }
-      })
-    case PENDING_RIGHT:
-      return update(state, {
-        right: {
-          [randomGif.name]: {
-            $set: randomGif.reducer( state.right[randomGif.name]
+            $set: randomGif.reducer( state[payload.side][randomGif.name]
                                    , randomGif.actions.pending()
             )
           }
