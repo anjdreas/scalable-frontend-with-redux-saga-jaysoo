@@ -19,10 +19,9 @@ npm install
 npm start
 ```
 
-Browse to [http://localhost:8080](http://localhost:8080), and see the
-"Real World" Example at the very bottom of the page.
+Browse to [http://localhost:8080](http://localhost:8080).
 
-- The GIFs section allows you to add a GIF for the entered topic.
+- The GIFs components allows you to add a GIF for given topic.
 - The toggle button can be *on* or *off*.
 - The counter can be *incremented* or *decremented*.
 - Whenever a new GIF is fetched (either by adding or requesting more),
