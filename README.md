@@ -6,6 +6,12 @@ by [@sebastienlorber](https://twitter.com/sebastienlorber).
 
 **Note:** More cleanup is needed with better documentation. Maybe some tests too? ;)
 
+## Demo
+
+See a demo of the running app here:
+
+[http://jaysoo.github.io/scalable-frontend-with-redux-saga-jaysoo/](http://jaysoo.github.io/scalable-frontend-with-redux-saga-jaysoo/)
+
 ## Running App
 
 ```
@@ -13,7 +19,7 @@ npm install
 npm start
 ```
 
-Browse to [http://localhost:8080](http://localhost:8080), and see the 
+Browse to [http://localhost:8080](http://localhost:8080), and see the
 "Real World" Example at the very bottom of the page.
 
 - The GIFs section allows you to add a GIF for the entered topic.
