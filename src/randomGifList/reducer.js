@@ -9,29 +9,29 @@ export const initialState =
   }
 
 export default (state = initialState, action) => {
-  const { type, payload } = action
+  const { type, payload: { id, url, topic } = {} } = action
   switch (type) {
     case ADD:
       return update(state, {
         gifs: {
           $push: [
             { id: state.gifs.length
-            , [randomGif.name]: randomGif.Model.Empty(payload.topic)
+            , [randomGif.name]: randomGif.Model.Empty(topic)
             }
           ]
         }
       })
     case CHANGE_TOPIC:
       return update(state, {
-        topic: { $set: payload.topic }
+        topic: { $set: topic }
       })
     case NEW_GIF:
       return update(state, {
         gifs: {
-          [payload.id]: {
+          [id]: {
             [randomGif.name]: {
-              $set: randomGif.reducer( state.gifs[payload.id][randomGif.name]
-                                     , randomGif.actions.newGif(payload.url)
+              $set: randomGif.reducer( state.gifs[id][randomGif.name]
+                                     , randomGif.actions.newGif(url)
               )
             }
           }
@@ -40,9 +40,9 @@ export default (state = initialState, action) => {
     case PENDING:
       return update(state, {
         gifs: {
-          [payload.id]: {
+          [id]: {
             [randomGif.name]: {
-              $set: randomGif.reducer( state.gifs[payload.id][randomGif.name]
+              $set: randomGif.reducer( state.gifs[id][randomGif.name]
                                      , randomGif.actions.pending()
               )
             }

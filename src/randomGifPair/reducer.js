@@ -9,23 +9,23 @@ export const initialState =
   }
 
 export default (state = initialState, action) => {
-  const { type, payload } = action
+  const { type, payload: { side, url } = {} } = action
   switch (type) {
     case NEW_GIF:
       return update(state, {
-        [payload.side]: {
+        [side]: {
           [randomGif.name]: {
-            $set: randomGif.reducer( state[payload.side][randomGif.name]
-                                   , randomGif.actions.newGif(payload.url)
+            $set: randomGif.reducer( state[side][randomGif.name]
+                                   , randomGif.actions.newGif(url)
             )
           }
         }
       })
     case PENDING:
       return update(state, {
-        [payload.side]: {
+        [side]: {
           [randomGif.name]: {
-            $set: randomGif.reducer( state[payload.side][randomGif.name]
+            $set: randomGif.reducer( state[side][randomGif.name]
                                    , randomGif.actions.pending()
             )
           }
