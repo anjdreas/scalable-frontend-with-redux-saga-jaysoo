@@ -1,4 +1,5 @@
 import React from 'react'
+import spinner from './spinner.gif'
 import { bindActionCreators } from 'redux'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
@@ -20,8 +21,8 @@ export class Component extends React.Component {
           {
             model.cata(
               { Empty: () => <span>--</span>
-                , Pending: () => <span>Loading...</span>
-                , Loaded: (topic, url) => <img src={url} style={{ width: '200px' }}/>
+               , Pending: () => <div><img src={spinner}/></div>
+               , Loaded: (topic, url) => <img src={url} style={{ width: '200px' }}/>
               }
             )
           }

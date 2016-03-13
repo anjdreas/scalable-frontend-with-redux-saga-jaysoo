@@ -39,6 +39,11 @@ module.exports = {
         test: /\.js$/,
         loaders: ['react-hot', 'babel'],
         include: PATHS.app
+      },
+      {
+        test: /\.gif$/,
+        loaders: ['url'],
+        include: PATHS.app
       }
     ]
   }
