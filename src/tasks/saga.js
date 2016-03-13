@@ -1,18 +1,18 @@
+import { identity } from 'ramda'
 import { call, fork, put, take } from 'redux-saga/effects'
 import { RUN_TASK } from './actions'
 
-const runTask = (task) => (
-  new Promise((res) => {
-    task.fork(
-      x => res({ rejected: x })
-      ,
-      x => res({ resolved: x })
-    )
-  })
-)
+const runTask = async (fn, args) => {
+  try {
+    const result = await fn(...args)
+    return { resolved: result }
+  } catch (e) {
+    return { rejected: e }
+  }
+}
 
-function* doRunTask(task, successType, failureType) {
-  const { resolved, rejected } = yield call(runTask, task)
+function* doRunTask(successType, failureType, fn, args) {
+  const { resolved, rejected } = yield call(runTask, fn, args)
   if (resolved) {
     yield put ({ type: successType, payload : resolved })
   } else {
@@ -21,11 +21,15 @@ function* doRunTask(task, successType, failureType) {
 }
 function* watchRunTasks() {
   while (true) {
-    const { task, successType, failureType } = yield take(RUN_TASK)
-    yield fork(doRunTask, task, successType, failureType)
+    const { successType
+          , failureType
+          , fn
+          , args
+          } = yield take(RUN_TASK)
+    yield fork(doRunTask, successType, failureType, fn, args)
   }
 }
 
 export default function* () {
-  yield [ fork(watchRunTasks) ]
+  yield fork(watchRunTasks)
 }

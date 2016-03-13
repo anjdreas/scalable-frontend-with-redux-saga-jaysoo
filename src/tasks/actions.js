@@ -1,8 +1,9 @@
 export const RUN_TASK = 'RUN_TASK'
 
-export const runTask = (task, successType, failureType) => ({
-  type: RUN_TASK,
-  task,
-  successType,
-  failureType
-})
+export const runTask = (successType, failureType, fn, ...args) => (
+  { type: RUN_TASK
+  , successType
+  , failureType
+  , fn
+  , args
+  } )

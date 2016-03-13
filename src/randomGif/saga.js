@@ -1,16 +1,18 @@
 import { call, fork, take, put } from 'redux-saga/effects'
 import * as tasks from '../tasks'
 import * as actions from './actions'
-import { fetchRandomGif } from './tasks'
+import { fetchRandomGif } from './api'
 
 function* watchRequestMore() {
   while (true) {
     const { payload: topic } = yield take(actions.REQUEST_MORE)
     yield put(actions.pending())
-    yield put(tasks.actions.runTask(fetchRandomGif(topic), actions.NEW_GIF, actions.NEW_GIF))
+    yield put(
+      tasks.actions.runTask(actions.NEW_GIF, actions.NEW_GIF, fetchRandomGif, topic)
+    )
   }
 }
 
 export default function* () {
-  yield [ fork(watchRequestMore) ]
+  yield fork(watchRequestMore)
 }
