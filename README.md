@@ -23,9 +23,10 @@ file (e.g. the public API). Component composition is done through
 the use of dumb components and selectors. Coupling to other module's
 state shape is not allowed.
 
-For example, `randomGifPair.Component` Container uses `randomGif.Component`.
+For example, [`randomGifPair.Component`](src/randomGifPair/Container.js) Container uses
+[`randomGif.Component`](src/randomGif/Container.js).
 The required props of `randomGif.Component` are selected from the state
-atom using `randomGif.selectors.getModel` which as the type:
+atom using [`randomGif.selectors.getModel`](src/randomGif/selectors.js) which as the type:
 
 ```
 getModel :: State -> randomGif.Model
