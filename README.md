@@ -4,7 +4,40 @@ This project is an attempt to address the problem raised at
 [slorber/scalable-frontend-with-elm-or-redux](https://github.com/slorber/scalable-frontend-with-elm-or-redux)
 by [@sebastienlorber](https://twitter.com/sebastienlorber).
 
-**Note:** More cleanup is needed with better documentation. Maybe some tests too? ;)
+## Application Structure
+
+This solution breaks the application down to smaller modules. A module
+may depend on other modules, but coupling between them is at a minimum.
+
+Each module exposes:
+
+- Action creators
+- One reducer function
+- One root saga (optional)
+- Selectors for querying data from module state
+- One root Container (connected component)
+- One root dumb Component (for possible reuse in other modules)
+
+Modules can only use the API exported by other module's `index.js`
+file (e.g. the public API). Component composition is done through
+the use of dumb components and selectors. Coupling to other module's
+state shape is not allowed.
+
+For example, `randomGifPair.Component` Container uses `randomGif.Component`.
+The required props of `randomGif.Component` are selected from the state
+atom using `randomGif.selectors.getModel` which as the type:
+
+```
+getModel :: State -> randomGif.Model
+```
+
+This delegation of responsibilities allow modules to change their internal
+implementation without breaking other modules, as long as the public API
+is maintained.
+
+For a better explanation on why I've organized it this way, please
+read my [blog post](http://jaysoo.ca/2016/02/28/organizing-redux-application/)
+on this topic.
 
 ## Demo
 

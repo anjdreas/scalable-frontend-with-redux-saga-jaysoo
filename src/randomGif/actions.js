@@ -1,4 +1,3 @@
-import Task from 'data.task';
 import { kAction } from '../utils'
 import { name } from './__init__'
 
