@@ -39,13 +39,7 @@ function* updateCounterIfNewGif({ descriptor }) {
 }
 
 export function* saga() {
-  yield [ fork(randomGif.saga)
-        , fork(randomGifPair.saga)
-        , fork(randomGifPairOfPair.saga)
-        , fork(randomGifList.saga)
-        , fork(tasks.saga)
-        , fork(watchForRunTask)
-        ]
+  yield [ fork(tasks.saga), fork(watchForRunTask) ]
 }
 
 export const Container = () => (

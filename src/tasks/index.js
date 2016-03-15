@@ -11,9 +11,12 @@ const pipe = (...ds) => ds.reduce((piped, d) => {
   return piped
 }, { pipe: [] })
 
+const run = actions.runTask
+
 export
   { actions
   , saga
   , create
   , pipe
+  , run
   }
