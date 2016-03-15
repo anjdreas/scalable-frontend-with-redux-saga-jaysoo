@@ -1,13 +1,12 @@
 import { takeEvery } from 'redux-saga'
 import { call, fork, take, put } from 'redux-saga/effects'
-import { composeP } from 'ramda'
 import * as randomGif from '../randomGif'
 import * as tasks from '../tasks'
 import * as actions from './actions'
 
-const withID = id => async (url) => ({ url, id })
+const withID = id => tasks.create(async (url) => ({ url, id }))
 const fetchRandomGifWithID = id =>
-  composeP(withID(id), randomGif.api.fetchRandomGif)
+  tasks.pipe(randomGif.tasks.fetchRandomGif, withID(id))
 
 function* doRequestMore(action)  {
   const { payload: { id, topic } } = action

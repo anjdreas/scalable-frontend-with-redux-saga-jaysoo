@@ -2,7 +2,7 @@ import * as actions from './actions'
 import reducer, { initialState } from './reducer'
 import saga from './saga'
 import * as selectors from './selectors'
-import * as api from './api'
+import * as tasks from './tasks'
 import Model from './model'
 import Container, { Component } from './Container'
 import { name } from './__init__'
@@ -13,7 +13,7 @@ export
   , reducer
   , saga
   , selectors
-  , api
+  , tasks
   , Model
   , Container
   , Component

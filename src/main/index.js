@@ -1,6 +1,7 @@
 import React from 'react'
 import { combineReducers } from 'redux'
-import { fork, take, race, put } from 'redux-saga/effects'
+import { takeEvery } from 'redux-saga'
+import { fork, take, race, put, select } from 'redux-saga/effects'
 import * as counter from '../counter'
 import * as randomGif from '../randomGif'
 import * as randomGifPair from '../randomGifPair'
@@ -18,17 +19,13 @@ export const reducer = combineReducers(
   , [theButton.name]: theButton.reducer
   })
 
-function* watchForGifListAndButtonChanges(getState) {
-  while (true) {
-    yield race(
-      [ take(randomGifList.actions.NEW_GIF)
-      , take(randomGif.actions.NEW_GIF)
-      , take(randomGifPair.actions.NEW_GIF)
-      , take(randomGifPairOfPair.actions.NEW_GIF)
-      ]
-    )
+function* watchForRunTask() {
+  yield* takeEvery(tasks.actions.RUN_TASK, updateCounterIfNewGif)
+}
 
-    const state = getState()
+function* updateCounterIfNewGif({ descriptor }) {
+  if (descriptor.pipe[0] === randomGif.tasks.fetchRandomGif.pipe[0]) {
+    const state = yield select()
     const currCount = counter.selectors.getModel(state)
     const buttonState = theButton.selectors.getModel(state)
 
@@ -41,13 +38,13 @@ function* watchForGifListAndButtonChanges(getState) {
   }
 }
 
-export function* saga(getState) {
+export function* saga() {
   yield [ fork(randomGif.saga)
         , fork(randomGifPair.saga)
         , fork(randomGifPairOfPair.saga)
         , fork(randomGifList.saga)
         , fork(tasks.saga)
-        , fork(watchForGifListAndButtonChanges, getState)
+        , fork(watchForRunTask)
         ]
 }
 
